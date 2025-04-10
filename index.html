@@ -11,7 +11,6 @@
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
@@ -19,12 +18,10 @@
             color: #333;
             padding: 20px;
         }
-
         .container {
             max-width: 1200px;
             margin: 0 auto;
         }
-
         header {
             background-color: #fff;
             padding: 20px;
@@ -32,21 +29,17 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
         }
-
         h1 {
             text-align: center;
             margin-bottom: 20px;
         }
-
         .file-input-container {
             text-align: center;
             margin: 20px 0;
         }
-
         input[type="file"] {
             display: none;
         }
-
         .custom-file-input {
             background-color: #3498db;
             color: white;
@@ -55,11 +48,9 @@
             cursor: pointer;
             transition: background-color 0.3s;
         }
-
         .custom-file-input:hover {
             background-color: #2980b9;
         }
-
         .checkbox-container {
             background-color: #fff;
             padding: 15px;
@@ -69,8 +60,8 @@
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
+            justify-content: center; /* 중앙 정렬 추가 */
         }
-
         .file-checkbox {
             display: flex;
             align-items: center;
@@ -79,27 +70,23 @@
             border-radius: 4px;
             background-color: #f8f9fa;
         }
-
         .file-checkbox input[type="checkbox"] {
             width: 16px;
             height: 16px;
             cursor: pointer;
         }
-
         .file-checkbox label {
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 5px;
         }
-
         .color-indicator {
             width: 12px;
             height: 12px;
             border-radius: 50%;
             display: inline-block;
         }
-
         .chart-container {
             background-color: #fff;
             padding: 20px;
@@ -125,7 +112,6 @@
                 <label for="fileInput" class="custom-file-input">Excel 파일 선택 (다중 선택 가능)</label>
             </div>
         </header>
-
         <div id="checkbox-container" class="checkbox-container"></div>
         
         <div class="chart-container">
