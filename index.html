@@ -1,9 +1,3 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>커피 로스팅 프로파일 비교</title>
     <style>
         /* 스타일 직접 포함 */
         * {
@@ -15,27 +9,31 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            background-color: #f5f5f5;
+            background-color: #f5f5f5; /* 약간 더 밝은 배경 */
             color: #333;
             padding: 20px;
         }
 
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
+            max-width: 1200px; /* 전체 너비 제한 */
+            margin: 20px auto; /* 컨테이너 가운데 정렬 및 상하 여백 */
+            background-color: #ffffff; /* 메인 콘텐츠 영역 흰색 배경 */
+            padding: 30px; /* 컨테이너 내부 여백 */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 약간 추가 */
         }
 
         header {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* 헤더 자체 배경/그림자 제거 (컨테이너가 처리) */
+            padding: 0 0 20px 0; /* 헤더 하단 여백 조정 */
             margin-bottom: 20px;
+            border-bottom: 1px solid #eee; /* 구분선 추가 */
         }
 
         h1 {
             text-align: center;
             margin-bottom: 20px;
+            color: #2c3e50; /* 제목 색상 약간 어둡게 */
         }
 
         .file-input-container {
@@ -44,7 +42,7 @@
         }
 
         input[type="file"] {
-            display: none;
+            display: none; /* 기본 파일 입력 숨기기 */
         }
 
         .custom-file-input {
@@ -54,84 +52,85 @@
             border-radius: 4px;
             cursor: pointer;
             transition: background-color 0.3s;
+            display: inline-block; /* 가운데 정렬 및 마진 적용 위해 */
         }
 
         .custom-file-input:hover {
             background-color: #2980b9;
         }
 
-        .checkbox-container {
-            background-color: #fff;
+        /* --- *** 체크박스 컨테이너 스타일 (가운데 정렬 적용) *** --- */
+        #checkbox-container { /* HTML에서 사용하는 ID 타겟 */
+            background-color: #f8f9fa; /* 체크박스 영역 배경색 */
             padding: 15px;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); */ /* 은은한 그림자 (선택 사항) */
             margin-bottom: 20px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
+            /* --- Flexbox를 사용하여 내부 아이템 가운데 정렬 --- */
+            display: flex;         /* Flexbox 활성화 */
+            justify-content: center; /* 아이템들을 가로 방향 가운데로 정렬 */
+            align-items: center;   /* 아이템들을 세로 방향 가운데로 정렬 (여러 줄일 때 유용) */
+            flex-wrap: wrap;       /* 아이템이 많으면 다음 줄로 넘어가도록 설정 */
+            gap: 15px;             /* 아이템 간의 간격 늘림 */
         }
-
+        /* 스크립트로 생성되는 개별 체크박스+라벨 그룹 스타일 */
         .file-checkbox {
             display: flex;
-            align-items: center;
-            gap: 8px;
+            align-items: center; /* 내부 요소(체크박스, 색상, 텍스트) 수직 정렬 */
+            background-color: #fff; /* 각 항목 배경 흰색 */
             padding: 5px 10px;
             border-radius: 4px;
-            background-color: #f8f9fa;
+            border: 1px solid #e0e0e0; /* 연한 테두리 추가 */
+            /* gap은 부모 컨테이너에서 설정 */
         }
 
         .file-checkbox input[type="checkbox"] {
-            width: 16px;
-            height: 16px;
+            width: 15px; /* 체크박스 크기 약간 줄임 */
+            height: 15px;
+            margin-right: 8px; /* 체크박스와 색상 표시기 사이 간격 */
             cursor: pointer;
+            accent-color: #3498db; /* 체크박스 체크 시 색상 (브라우저 지원 필요) */
         }
 
         .file-checkbox label {
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 6px; /* 색상 표시기와 텍스트 사이 간격 */
+            font-size: 13px; /* 폰트 약간 작게 */
+            color: #555; /* 텍스트 색상 조정 */
         }
 
+        /* script.js의 createCheckbox에서 사용하는 클래스 */
         .color-indicator {
             width: 12px;
             height: 12px;
-            border-radius: 50%;
+            border-radius: 3px; /* 약간 둥근 사각형 */
             display: inline-block;
+            border: 1px solid rgba(0,0,0,0.1); /* 매우 연한 테두리 */
+            vertical-align: middle; /* 텍스트와 수직 정렬 개선 */
         }
+        /* --- END OF 체크박스 컨테이너 스타일 --- */
+
 
         .chart-container {
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* 은은한 그림자 */
             margin-bottom: 20px;
-            height: 600px;
+            /* Chart.js가 높이를 제어하도록 고정 높이 제거 (maintainAspectRatio: false와 함께) */
+            /* height: 600px; */
+             position: relative; /* Chart.js 반응형에 필요 */
+             /* 차트 로드 전 영역이 축소되는 것 방지 */
+             min-height: 450px; 
         }
-    </style>
-    <!-- Chart.js 라이브러리 추가 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
-    <!-- Chart.js Annotation 플러그인 추가 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/2.1.0/chartjs-plugin-annotation.min.js"></script>
-    <!-- XLSX 라이브러리 추가 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-</head>
-<body>
-    <div class="container">
-        <header>
-            <h1>커피 로스팅 프로파일 비교</h1>
-            <div class="file-input-container">
-                <input type="file" id="fileInput" accept=".xlsx, .xls" multiple>
-                <label for="fileInput" class="custom-file-input">Excel 파일 선택 (다중 선택 가능)</label>
-            </div>
-        </header>
 
-        <div id="checkbox-container" class="checkbox-container"></div>
-        
-        <div class="chart-container">
-            <canvas id="roastingChart"></canvas>
-        </div>
-    </div>
-    <script src="script.js"></script>
-</body>
-</html>
+        /* Chart.js 기본 범례 스타일 (선택 사항, 사용자 정의 체크박스를 사용 안 할 경우 대비) */
+        /* Chart.js 3.x 버전에서는 범례 스타일링이 플러그인 옵션에서 주로 제어됨 */
+        /* 아래는 일반적인 스타일링 예시이며, Chart.js 버전 및 구성에 따라 동작이 다를 수 있음 */
+        /* .chartjs-legend ul { ... } */ 
+        /* .chartjs-legend li { ... } */
+        /* .chartjs-legend li span { ... } */
+
+    </style>
